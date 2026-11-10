@@ -1,0 +1,10 @@
+ezdxf>=1.4.0
+opencv-python>=4.8.0
+scikit-image>=0.22.0
+numpy>=1.26.0
+scipy>=1.11.0
+shapely>=2.0.0
+pymupdf>=1.23.0
+pillow>=10.0.0
+pywebview>=5.0.0
+bottle>=0.13.0

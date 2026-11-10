@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AV Ras2 — Raster to CAD Reconstruction | Artificial Vision, Inc.</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Top Application Bar -->
+  <header>
+    <div class="brand">
+      <span class="brand-logo-text">ARTIFICIAL VISION</span>
+      <span class="brand-badge">AV Ras2</span>
+      <span class="brand-tagline">Find your sense.</span>
+    </div>
+
+    <div class="header-actions">
+      <button id="btnRunConversion" class="btn btn-primary">
+        <span>⚡ Reconstruct CAD</span>
+      </button>
+      <button id="btnExportDXF" class="btn btn-gold-outline" disabled>
+        <span>💾 Export DXF</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main 3-Column Layout -->
+  <div class="main-layout">
+
+    <!-- Left Control Panel -->
+    <aside class="panel panel-left">
+      
+      <!-- Document Intake -->
+      <div class="panel-section">
+        <div class="section-title">Source Plan Intake</div>
+        <div id="dropzone" class="dropzone">
+          <div class="dropzone-icon">📁</div>
+          <div class="dropzone-text"><strong>Drag & Drop</strong> Matterport / PDF / Image</div>
+          <div style="font-size:10px; color:var(--text-muted); margin-top:4px;">Supports PDF, PNG, JPG, TIFF, SVG</div>
+          <input type="file" id="fileInput" accept=".pdf,.png,.jpg,.jpeg,.tif,.tiff,.svg" style="display:none;">
+        </div>
+        <div id="fileInfo" style="margin-top:10px; font-size:11px; font-family:var(--font-mono); color:var(--text-secondary); display:none;">
+          File: <span id="fileName" style="font-weight:600; color:var(--text-primary);">None</span>
+        </div>
+      </div>
+
+      <!-- Scale Calibration Engine -->
+      <div class="panel-section">
+        <div class="section-title">
+          <span>Scale Intelligence</span>
+          <span id="scaleStatusBadge" style="font-size:10px; color:var(--gold-hover);">Auto</span>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Drawing Units</label>
+          <select id="selUnits" class="form-control">
+            <option value="ft" selected>Feet (ft)</option>
+            <option value="in">Inches (in)</option>
+            <option value="m">Meters (m)</option>
+            <option value="mm">Millimeters (mm)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Scale Mode</label>
+          <select id="selScaleMethod" class="form-control">
+            <option value="auto">Auto (Matterport Scale Bar)</option>
+            <option value="preset">Architectural Preset</option>
+            <option value="manual_2pt">Manual 2-Point Calibration</option>
+          </select>
+        </div>
+
+        <div id="presetScaleGroup" class="form-group" style="display:none;">
+          <label class="form-label">Scale Ratio</label>
+          <select id="selPresetRatio" class="form-control">
+            <option value="1/4&quot; = 1'-0&quot;">1/4" = 1'-0" (1:48)</option>
+            <option value="1/8&quot; = 1'-0&quot;">1/8" = 1'-0" (1:96)</option>
+            <option value="3/16&quot; = 1'-0&quot;">3/16" = 1'-0" (1:64)</option>
+            <option value="1:50">1:50</option>
+            <option value="1:100">1:100</option>
+          </select>
+        </div>
+
+        <div id="manualScaleGroup" style="display:none;">
+          <button id="btnStart2PtCalib" class="btn btn-secondary btn-full btn-sm">
+            <span>📏 Pick 2 Calibration Points</span>
+          </button>
+          <div style="display:flex; gap:6px; margin-top:8px;">
+            <input type="number" id="inputRealDist" class="form-control" placeholder="Real distance" value="10.0" step="0.1">
+            <button id="btnApplyManualCalib" class="btn btn-primary btn-sm">Apply</button>
+          </div>
+        </div>
+
+        <div style="margin-top:10px; font-size:11px; font-family:var(--font-mono); color:var(--text-secondary);">
+          Scale: <span id="scaleRatioDisplay">0.050000 ft/px</span>
+        </div>
+      </div>
+
+      <!-- Architectural CAD Layers -->
+      <div class="panel-section">
+        <div class="section-title">CAD Layers</div>
+        <div class="layer-list">
+          <label class="layer-item">
+            <div class="layer-tag">
+              <span class="layer-color-dot" style="background:#1a1a1a;"></span>
+              <span>A-WALL (Walls)</span>
+            </div>
+            <input type="checkbox" id="chkLayerWall" checked>
+          </label>
+
+          <label class="layer-item">
+            <div class="layer-tag">
+              <span class="layer-color-dot" style="background:#333333;"></span>
+              <span>A-HATCH (Poche Fills)</span>
+            </div>
+            <input type="checkbox" id="chkLayerHatch" checked>
+          </label>
+
+          <label class="layer-item">
+            <div class="layer-tag">
+              <span class="layer-color-dot" style="background:#d9534f;"></span>
+              <span>A-DOOR (Doors/Swings)</span>
+            </div>
+            <input type="checkbox" id="chkLayerDoor" checked>
+          </label>
+
+          <label class="layer-item">
+            <div class="layer-tag">
+              <span class="layer-color-dot" style="background:#0288d1;"></span>
+              <span>A-GLAZ (Windows)</span>
+            </div>
+            <input type="checkbox" id="chkLayerGlaz" checked>
+          </label>
+
+          <label class="layer-item">
+            <div class="layer-tag">
+              <span class="layer-color-dot" style="background:#2e7d32;"></span>
+              <span>A-COLS (Columns)</span>
+            </div>
+            <input type="checkbox" id="chkLayerCols" checked>
+          </label>
+
+          <label class="layer-item">
+            <div class="layer-tag">
+              <span class="layer-color-dot" style="background:#f57c00;"></span>
+              <span>A-ANNO (Annotations)</span>
+            </div>
+            <input type="checkbox" id="chkLayerAnno" checked>
+          </label>
+
+          <label class="layer-item">
+            <div class="layer-tag">
+              <span class="layer-color-dot" style="background:#d32f2f;"></span>
+              <span>AV-REVIEW (Warnings)</span>
+            </div>
+            <input type="checkbox" id="chkLayerReview" checked>
+          </label>
+        </div>
+      </div>
+
+      <!-- Reconstruction Parameters -->
+      <div class="panel-section">
+        <div class="section-title">Reconstruction Settings</div>
+        <div class="form-group">
+          <label class="form-label">Snap Tolerance (px)</label>
+          <input type="range" id="rngSnapTol" min="1" max="8" value="3" step="0.5" style="width:100%;">
+          <div style="font-size:10px; font-family:var(--font-mono); color:var(--text-muted); text-align:right;" id="lblSnapTol">3.0 px</div>
+        </div>
+      </div>
+
+    </aside>
+
+    <!-- Center Interactive Canvas -->
+    <main class="canvas-wrapper">
+
+      <!-- View Toolbar -->
+      <div class="canvas-toolbar">
+        <div class="tool-group">
+          <button id="modeOverlay" class="mode-btn active">Overlay QA</button>
+          <button id="modeCAD" class="mode-btn">CAD Only</button>
+          <button id="modeRaster" class="mode-btn">Raster Only</button>
+        </div>
+
+        <div class="toolbar-divider"></div>
+
+        <div class="tool-group" style="font-size:11px; color:var(--text-secondary); gap:8px;">
+          <span>Overlay Opacity:</span>
+          <input type="range" id="rngOpacity" min="0" max="100" value="65" style="width:70px;">
+        </div>
+
+        <div class="toolbar-divider"></div>
+
+        <div class="tool-group">
+          <button id="btnZoomIn" class="btn btn-secondary btn-sm" title="Zoom In">+</button>
+          <button id="btnZoomOut" class="btn btn-secondary btn-sm" title="Zoom Out">-</button>
+          <button id="btnFitView" class="btn btn-secondary btn-sm" title="Fit to View">⛶ Fit</button>
+        </div>
+      </div>
+
+      <canvas id="mainCanvas"></canvas>
+    </main>
+
+    <!-- Right Inspector & QA Panel -->
+    <aside class="panel panel-right">
+
+      <!-- QA Verification Report -->
+      <div class="panel-section">
+        <div class="section-title">Automated QA Metrics</div>
+        <div class="metric-grid">
+          <div class="metric-card">
+            <div id="metricCoverage" class="metric-val">--%</div>
+            <div class="metric-label">Raster Coverage</div>
+          </div>
+          <div class="metric-card">
+            <div id="metricWalls" class="metric-val">--</div>
+            <div class="metric-label">Walls Reconstructed</div>
+          </div>
+          <div class="metric-card">
+            <div id="metricHatches" class="metric-val">--</div>
+            <div class="metric-label">Native CAD Hatches</div>
+          </div>
+          <div class="metric-card">
+            <div id="metricDoors" class="metric-val">--</div>
+            <div class="metric-label">Doors & Swings</div>
+          </div>
+        </div>
+
+        <div style="margin-top:12px; font-size:11px; font-family:var(--font-mono); color:var(--text-secondary);">
+          <div>Residual Error: <span id="metricResidual">0.0000</span></div>
+          <div>QA Status: <span id="metricQAStatus" style="font-weight:600; color:var(--gold-hover);">AWAITING RUN</span></div>
+        </div>
+      </div>
+
+      <!-- Entity Property Inspector -->
+      <div class="panel-section" style="flex:1;">
+        <div class="section-title">Entity Inspector</div>
+        <div id="noEntitySelected" style="font-size:12px; color:var(--text-muted); font-style:italic;">
+          Click on any CAD wall, hatch, or door swing to inspect properties.
+        </div>
+        <table id="entityTable" class="prop-table" style="display:none;">
+          <tbody>
+            <tr><td class="key">Entity ID</td><td id="propId" class="val">--</td></tr>
+            <tr><td class="key">Type</td><td id="propType" class="val">--</td></tr>
+            <tr><td class="key">Layer</td><td id="propLayer" class="val">--</td></tr>
+            <tr><td class="key">Confidence</td><td id="propConf" class="val">--</td></tr>
+            <tr><td class="key">CAD Length/Area</td><td id="propSize" class="val">--</td></tr>
+            <tr><td class="key">Thickness</td><td id="propThick" class="val">--</td></tr>
+            <tr><td class="key">Evidence</td><td id="propEvidence" class="val">--</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Export Suite -->
+      <div class="panel-section">
+        <div class="section-title">Deliverables Export</div>
+        <div style="display:flex; flex-direction:column; gap:8px;">
+          <button id="btnDownloadDXF" class="btn btn-primary btn-full" disabled>
+            <span>💾 Download AutoCAD DXF</span>
+          </button>
+          <button id="btnDownloadSVG" class="btn btn-secondary btn-full" disabled>
+            <span>📐 Download SVG Vector</span>
+          </button>
+          <button id="btnDownloadPDF" class="btn btn-secondary btn-full" disabled>
+            <span>📄 Download Vector PDF</span>
+          </button>
+          <button id="btnDownloadOverlay" class="btn btn-secondary btn-full" disabled>
+            <span>🔍 Download QA Overlay PNG</span>
+          </button>
+        </div>
+      </div>
+
+    </aside>
+
+  </div>
+
+  <!-- Bottom Log / Status Bar -->
+  <footer class="status-bar">
+    <div id="statusMessage">AV Ras2 Engine Ready. Load a Matterport plan or drawing to begin.</div>
+    <div style="display:flex; gap:16px;">
+      <div id="cursorCoord">X: 0.00 Y: 0.00</div>
+      <div>Artificial Vision, Inc.</div>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1200" width="1200" height="1200">
+  <defs>
+    <pattern id="diagonalHatch" width="10" height="10" patternTransform="rotate(45 0 0)" patternUnits="userSpaceOnUse">
+      <line x1="0" y1="0" x2="0" y2="10" stroke="#555" stroke-width="1.5" />
+    </pattern>
+  </defs>
+  <style>
+    .A-WALL { stroke: #1a1a1a; stroke-width: 2.0; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+    .A-DOOR { stroke: #d9534f; stroke-width: 1.5; fill: none; }
+    .A-GLAZ { stroke: #0288d1; stroke-width: 1.5; fill: none; }
+    .A-COLS { stroke: #2e7d32; stroke-width: 2.0; fill: #a5d6a7; fill-opacity: 0.5; }
+    .A-HATCH { fill: #222222; fill-opacity: 0.85; stroke: none; }
+    .A-ANNO { stroke: #f57c00; stroke-width: 1.0; fill: none; }
+    .AV-REVIEW { stroke: #d32f2f; stroke-width: 2.0; stroke-dasharray: 4,4; fill: none; }
+  </style>
+  <g id="A-WALL" class="A-WALL">
+    <polygon points="200.00,201.00 200.00,818.00 999.00,818.00 999.00,201.00" id="c30db594" />
+    <polygon points="219.00,220.00 579.00,219.00 580.00,448.00 597.00,449.00 600.00,219.00 979.00,219.00 980.00,799.00 600.00,800.00 599.00,511.00 582.00,510.00 579.00,800.00 220.00,800.00" id="e3c254e7" />
+    <line x1="202.00" y1="1109.00" x2="399.00" y2="1108.00" id="f09287c3" />
+    <line x1="397.00" y1="1100.00" x2="200.00" y2="1101.00" id="6c5a83af" />
+    <line x1="200.00" y1="1101.00" x2="202.00" y2="1109.00" id="cf38e821" />
+    <line x1="399.00" y1="1108.00" x2="397.00" y2="1100.00" id="b74158e3" />
+  </g>
+  <g id="A-GLAZ" class="A-GLAZ">
+    <line x1="599.00" y1="450.00" x2="660.00" y2="449.00" id="b617122f" />
+    <line x1="609.00" y1="449.00" x2="661.00" y2="451.00" id="99790bb9" />
+    <line x1="601.00" y1="511.00" x2="631.00" y2="503.00" id="4e7424a6" />
+    <line x1="639.00" y1="497.00" x2="658.00" y2="470.00" id="1b55f87f" />
+    <line x1="600.00" y1="451.00" x2="646.00" y2="451.00" id="29e3d8d4" />
+    <line x1="611.00" y1="510.00" x2="642.00" y2="494.00" id="ffd1edcd" />
+    <line x1="648.00" y1="488.00" x2="661.00" y2="455.00" id="c9718561" />
+  </g>
+  <g id="A-HATCH" class="A-HATCH">
+    <path d="M 200.00 1101.00 L 202.00 1109.00 L 399.00 1108.00 L 397.00 1100.00 Z" fill-rule="evenodd" id="fd52f332" />
+    <path d="M 200.00 201.00 L 200.00 818.00 L 999.00 818.00 L 999.00 201.00 Z M 219.00 220.00 L 579.00 219.00 L 580.00 448.00 L 597.00 449.00 L 600.00 219.00 L 979.00 219.00 L 980.00 799.00 L 600.00 800.00 L 599.00 511.00 L 582.00 510.00 L 579.00 800.00 L 220.00 800.00 Z" fill-rule="evenodd" id="4ae61e45" />
+  </g>
+</svg>

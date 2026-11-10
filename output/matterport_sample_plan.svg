@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1200" width="1200" height="1200">
+  <defs>
+    <pattern id="diagonalHatch" width="10" height="10" patternTransform="rotate(45 0 0)" patternUnits="userSpaceOnUse">
+      <line x1="0" y1="0" x2="0" y2="10" stroke="#555" stroke-width="1.5" />
+    </pattern>
+  </defs>
+  <style>
+    .A-WALL { stroke: #1a1a1a; stroke-width: 2.0; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+    .A-DOOR { stroke: #d9534f; stroke-width: 1.5; fill: none; }
+    .A-GLAZ { stroke: #0288d1; stroke-width: 1.5; fill: none; }
+    .A-COLS { stroke: #2e7d32; stroke-width: 2.0; fill: #a5d6a7; fill-opacity: 0.5; }
+    .A-HATCH { fill: #222222; fill-opacity: 0.85; stroke: none; }
+    .A-ANNO { stroke: #f57c00; stroke-width: 1.0; fill: none; }
+    .AV-REVIEW { stroke: #d32f2f; stroke-width: 2.0; stroke-dasharray: 4,4; fill: none; }
+  </style>
+  <g id="A-WALL" class="A-WALL">
+    <polygon points="200.00,201.00 200.00,818.00 999.00,818.00 999.00,201.00" id="c9dca54f" />
+    <polygon points="219.50,219.50 579.50,219.50 579.50,448.50 598.50,448.50 598.50,219.00 979.50,219.00 979.50,799.50 599.50,799.50 599.50,510.50 580.50,510.50 580.50,800.00 219.50,800.00" id="83d7d55c" />
+    <line x1="202.00" y1="1108.50" x2="399.00" y2="1108.50" id="99b5809d" />
+    <line x1="397.00" y1="1100.50" x2="200.00" y2="1100.50" id="c6cb6416" />
+    <line x1="200.00" y1="1100.50" x2="202.00" y2="1108.50" id="4251d0a2" />
+    <line x1="399.00" y1="1108.50" x2="397.00" y2="1100.50" id="2fb69284" />
+  </g>
+  <g id="A-DOOR" class="A-DOOR">
+    <path d="M 657.95 481.75 A 34.22 34.22 0 1 1 663.22 462.95" id="20fa2d4a" />
+    <line x1="629.00" y1="463.50" x2="657.95" y2="481.75" id="97844978" />
+  </g>
+  <g id="A-GLAZ" class="A-GLAZ">
+    <line x1="606.00" y1="450.00" x2="654.00" y2="450.00" id="fe0a14f1" />
+    <line x1="600.00" y1="511.00" x2="631.00" y2="503.00" id="4f818926" />
+    <line x1="604.00" y1="450.00" x2="643.00" y2="450.00" id="6cc66c80" />
+  </g>
+  <g id="A-FIXT" class="A-FIXT">
+    <line x1="609.00" y1="449.00" x2="637.00" y2="449.00" id="3628dd12" />
+    <line x1="600.00" y1="510.00" x2="629.00" y2="503.00" id="a2179dd8" />
+  </g>
+  <g id="A-HATCH" class="A-HATCH">
+    <path d="M 200.00 1100.50 L 202.00 1108.50 L 399.00 1108.50 L 397.00 1100.50 Z" fill-rule="evenodd" id="40ce832c" />
+    <path d="M 200.00 201.00 L 200.00 818.00 L 999.00 818.00 L 999.00 201.00 Z M 219.50 219.50 L 579.50 219.50 L 579.50 448.50 L 598.50 448.50 L 598.50 219.00 L 979.50 219.00 L 979.50 799.50 L 599.50 799.50 L 599.50 510.50 L 580.50 510.50 L 580.50 800.00 L 219.50 800.00 Z" fill-rule="evenodd" id="2d5c3517" />
+  </g>
+</svg>
